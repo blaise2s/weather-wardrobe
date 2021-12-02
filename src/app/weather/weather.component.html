@@ -1,0 +1,37 @@
+<div class="container" *ngIf="state | async as state">
+  <ng-template #spinner>
+    <div class="loading">
+      <mat-spinner></mat-spinner>
+    </div>
+  </ng-template>
+  <ng-container *ngIf="!state.loading; else spinner">
+    <div class="content">
+      <div class="weather-cards">
+        <mat-card *ngFor="let daily of state.oneWeather?.daily">
+          <img
+            mat-card-avatar
+            [src]="
+              'http://openweathermap.org/img/wn/' +
+              daily.weather[0].icon +
+              '@2x.png'
+            "
+            [alt]="daily.weather[0].icon"
+          />
+          <mat-card-title>{{ daily.dt * 1000 | date }}</mat-card-title>
+          <mat-card-subtitle>{{
+            daily.weather[0].main +
+              ' | High: ' +
+              (daily.temp.max | number: '1.0-0') +
+              ' Low: ' +
+              (daily.temp.min | number: '1.0-0')
+          }}</mat-card-subtitle>
+          <img
+            mat-card-image
+            src="/assets/images/fall-fashion.jpeg"
+            alt="fall-fashion"
+          />
+        </mat-card>
+      </div>
+    </div>
+  </ng-container>
+</div>
